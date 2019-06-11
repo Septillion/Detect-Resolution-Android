@@ -1,6 +1,7 @@
 package com.frankseptillion.readresolution;
 
 import android.graphics.Point;
+import android.os.Build;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,11 +19,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Initializing View
-        TextView resolution = (TextView)findViewById(R.id.idResolution);
-        TextView dementions = (TextView)findViewById(R.id.idDemensions);
-        TextView density = (TextView)findViewById(R.id.idDesity);
-        TextView isHDR = (TextView)findViewById(R.id.idIsHDR);
-        //TextView hdrcap = (TextView)findViewById(R.id.idHDRcap);
+        TextView resolution = findViewById(R.id.idResolution);
+        TextView dementions = findViewById(R.id.idDemensions);
+        TextView density = findViewById(R.id.idDesity);
+        TextView isHDR = findViewById(R.id.idIsHDR);
+        //TextView hdrcap = findViewById(R.id.idHDRcap);
 
 
         // Get Display Information
@@ -51,10 +52,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if (display.isHdr()){
-            isHdr = "Yes";
-        }else{
-            isHdr = "No";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (display.isHdr()){
+                isHdr = "Yes";
+            }else{
+                isHdr = "No";
+            }
         }
 
 
