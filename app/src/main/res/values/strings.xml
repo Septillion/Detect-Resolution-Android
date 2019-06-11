@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Detect Resolution</string>
     <string name="rendering_resolution">Rendering Resolution</string>
-    <string name="demensions_in_dp">Demensions in dp</string>
+    <string name="demensions_in_dp">Dimensions in dp</string>
     <string name="density_in_dpi">Density in DPI</string>
     <string name="written_by_frank_from_frankseptillion_com">written by Frank from frankseptillion.com</string>
     <string name="supports_hdr">Supports HDR</string>
