@@ -6,4 +6,5 @@
     <string name="density_in_dpi">密度（DPI）</string>
     <string name="written_by_frank_from_frankseptillion_com">王跃琨 frankseptillion.com</string>
     <string name="supports_hdr">支持 HDR</string>
+    <string name="model">型号</string>
 </resources>

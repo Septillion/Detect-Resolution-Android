@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Initializing View
+        TextView model = findViewById(R.id.idModel);
         TextView resolution = findViewById(R.id.idResolution);
         TextView dementions = findViewById(R.id.idDemensions);
         TextView density = findViewById(R.id.idDesity);
@@ -30,10 +31,13 @@ public class MainActivity extends AppCompatActivity {
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics dm = new DisplayMetrics();
         display.getRealMetrics(dm);
-        int[] hdrCapEnum = display.getHdrCapabilities().getSupportedHdrTypes();
-        String hdrCapabilities = new String();
+        //int[] hdrCapEnum = display.getHdrCapabilities().getSupportedHdrTypes();
+        //String hdrCapabilities = new String();
         String isHdr = new String();
+        String modelNumber = Build.MODEL;
 
+
+        /*
         for (int i:hdrCapEnum
              ) {
             switch (i) {
@@ -51,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         }
+        */
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (display.isHdr()){
@@ -58,10 +63,13 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 isHdr = "No";
             }
+        }else {
+            isHdr = "No";
         }
 
 
         // Set Display Information
+        model.setText(modelNumber);
         resolution.setText(dm.widthPixels + " x " + dm.heightPixels);
         dementions.setText((int)Math.ceil(dm.widthPixels/dm.density) + " x " + (int)Math.ceil(dm.heightPixels/dm.density));
         density.setText(Integer.toString(dm.densityDpi));
