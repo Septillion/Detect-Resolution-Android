@@ -6,4 +6,6 @@
     <string name="written_by_frank_from_frankseptillion_com">written by Frank from frankseptillion.com</string>
     <string name="supports_hdr">Supports HDR</string>
     <string name="model">Model</string>
+    <string name="FontWeight">Font Weight</string>
+    <string name="weight100">G</string>
 </resources>

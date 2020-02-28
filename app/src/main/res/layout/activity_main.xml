@@ -149,6 +149,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
+
         <!--
 
                 <TextView
@@ -179,6 +180,8 @@
 
         -->
 
+        <!--
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -186,6 +189,7 @@
             android:textColor="#aaffffff"
             android:text="@string/written_by_frank_from_frankseptillion_com" />
 
+        -->
     </LinearLayout>
 
 </android.support.v7.widget.LinearLayoutCompat>

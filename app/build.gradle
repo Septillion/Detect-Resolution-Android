@@ -4,10 +4,10 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.frankseptillion.readresolution"
-        minSdkVersion 22
+        minSdkVersion 28
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0.2"
+        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -25,4 +25,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //implementation 'com.jaredrummler:android-device-names:1.0.9'
 }
