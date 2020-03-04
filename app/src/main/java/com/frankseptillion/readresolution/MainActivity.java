@@ -56,26 +56,40 @@ public class MainActivity extends AppCompatActivity {
         // Get HDR Capabilities
             int[] HDRcapabilities = display.getHdrCapabilities().getSupportedHdrTypes();
             if (HDRcapabilities.length > 0) {
+                StringBuilder HDRenum = new StringBuilder();
+                int HDR10flag = 0;
                 for (int i : HDRcapabilities) {
-                    String HDRreadableName;
                     switch (i) {
-                        case Display.HdrCapabilities.HDR_TYPE_DOLBY_VISION:
-                            HDRreadableName = "Dolby Vision";
+                        case Display.HdrCapabilities.HDR_TYPE_HLG:
+                            HDRenum.append("HLG, ");
                             break;
                         case Display.HdrCapabilities.HDR_TYPE_HDR10:
-                            HDRreadableName = "HDR10";
-                            break;
-                        case Display.HdrCapabilities.HDR_TYPE_HLG:
-                            HDRreadableName = "HLG";
+                            HDR10flag = 1;
                             break;
                         case 4:
-                            HDRreadableName = "HDR10+";
+                            HDR10flag = 2;
+                            break;
+                        case Display.HdrCapabilities.HDR_TYPE_DOLBY_VISION:
+                            HDR10flag = 3;
                             break;
                         default:
-                            HDRreadableName = "No";
+                            HDRenum = new StringBuilder("No");
                     }
-                    isHdr.append(" ").append(HDRreadableName);
                 }
+                switch (HDR10flag){
+                    case 1:
+                        HDRenum.append("HDR10");
+                        break;
+                    case 2:
+                        HDRenum.append("HDR10+");
+                        break;
+                    case 3:
+                        HDRenum.append("Dolby Vision");
+                        break;
+                    default:
+                        break;
+                }
+                isHdr.append(HDRenum.toString());
             } else {
                 isHdr.append("No");
             }
