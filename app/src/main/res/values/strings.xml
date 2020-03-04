@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">Detect Resolution</string>
-    <string name="rendering_resolution">Rendering Resolution</string>
-    <string name="demensions_in_dp">Dimensions in dp</string>
-    <string name="density_in_dpi">Density in DPI</string>
+    <string name="rendering_resolution">Display Resolution (pixel)</string>
+    <string name="demensions_in_dp">UI Dimensions (dp)</string>
+    <string name="density_in_dpi">Scale Factor</string>
     <string name="written_by_frank_from_frankseptillion_com">written by Frank from frankseptillion.com</string>
     <string name="supports_hdr">Supports HDR</string>
-    <string name="model">Model</string>
+    <string name="model">Device Name</string>
     <string name="FontWeight">Font Weight</string>
     <string name="weight100">G</string>
+    <string name="refresh_rate">Refresh Rate</string>
 </resources>

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">检测分辨率</string>
-    <string name="rendering_resolution">渲染分辨率</string>
-    <string name="demensions_in_dp">屏幕尺寸（dp）</string>
-    <string name="density_in_dpi">密度（DPI）</string>
+    <string name="rendering_resolution">屏幕分辨率（像素）</string>
+    <string name="demensions_in_dp">界面尺寸（dp）</string>
+    <string name="density_in_dpi">缩放倍数</string>
     <string name="written_by_frank_from_frankseptillion_com">王跃琨 frankseptillion.com</string>
     <string name="supports_hdr">支持 HDR</string>
-    <string name="model">型号</string>
+    <string name="model">设备名称</string>
     <string name="FontWeight">Font Weight</string>
     <string name="weight100">续</string>
+    <string name="refresh_rate">刷新率</string>
 </resources>

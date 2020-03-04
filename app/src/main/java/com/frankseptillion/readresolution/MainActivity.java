@@ -8,12 +8,8 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.widget.TextView;
 
-//import com.jaredrummler.android.device.DeviceName;
 
 public class MainActivity extends AppCompatActivity {
-
-    private TextView model;
-    private String modelNumber2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,22 +17,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Initializing View
-        model = findViewById(R.id.idModel);
+        TextView model = findViewById(R.id.idModel);
         TextView resolution = findViewById(R.id.idResolution);
-        TextView dementions = findViewById(R.id.idDemensions);
+        TextView dimensions = findViewById(R.id.idDemensions);
         TextView density = findViewById(R.id.idDesity);
         TextView isHDR = findViewById(R.id.idIsHDR);
+        TextView refreshRate = findViewById(R.id.refreshRate);
 
 
         // Get Display Information
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics dm = new DisplayMetrics();
         display.getRealMetrics(dm);
-        String isHdr = new String();
-        //String modelNumber = Build.MODEL;
+        StringBuilder isHdr = new StringBuilder("");
 
-        //String modelNumber1 = DeviceName.getDeviceName();
-
+        // Get Device Name
+        String modelNumber2;
         if(BluetoothAdapter.getDefaultAdapter().getName()!=null){
             modelNumber2 = BluetoothAdapter.getDefaultAdapter().getName();
         }else{
@@ -44,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        // Get isHDR
+        /*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (display.isHdr()){
                 isHdr = "Yes";
@@ -53,14 +51,44 @@ public class MainActivity extends AppCompatActivity {
         }else {
             isHdr = "No";
         }
+        */
+
+        // Get HDR Capabilities
+            int[] HDRcapabilities = display.getHdrCapabilities().getSupportedHdrTypes();
+            if (HDRcapabilities.length > 0) {
+                for (int i : HDRcapabilities) {
+                    String HDRreadableName;
+                    switch (i) {
+                        case Display.HdrCapabilities.HDR_TYPE_DOLBY_VISION:
+                            HDRreadableName = "Dolby Vision";
+                            break;
+                        case Display.HdrCapabilities.HDR_TYPE_HDR10:
+                            HDRreadableName = "HDR10";
+                            break;
+                        case Display.HdrCapabilities.HDR_TYPE_HLG:
+                            HDRreadableName = "HLG";
+                            break;
+                        case 4:
+                            HDRreadableName = "HDR10+";
+                            break;
+                        default:
+                            HDRreadableName = "No";
+                    }
+                    isHdr.append(" ").append(HDRreadableName);
+                }
+            } else {
+                isHdr.append("No");
+            }
+
 
 
         // Set Display Information
         model.setText(modelNumber2);
         resolution.setText(dm.widthPixels + " x " + dm.heightPixels);
-        dementions.setText((int)Math.ceil(dm.widthPixels/dm.density) + " x " + (int)Math.ceil(dm.heightPixels/dm.density));
-        density.setText(Integer.toString(dm.densityDpi));
-        isHDR.setText(isHdr);
+        dimensions.setText((int)Math.ceil(dm.widthPixels/dm.density) + " x " + (int)Math.ceil(dm.heightPixels/dm.density));
+        density.setText(dm.density+"x");
+        isHDR.setText(isHdr.toString());
+        refreshRate.setText((int)display.getRefreshRate()+"Hz");
     }
 
 }
