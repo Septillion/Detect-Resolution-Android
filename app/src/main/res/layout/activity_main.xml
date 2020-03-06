@@ -11,6 +11,11 @@
     android:orientation="horizontal"
     tools:context=".MainActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -185,7 +190,7 @@
             android:layout_width="match_parent"
             android:layout_height="20sp"
             android:layout_marginBottom="20dp"
-            app:srcCompat="@drawable/colormanaged"/>
+            app:srcCompat="@drawable/notcolormanaged" />
 
         <TextView
             android:layout_width="match_parent"
@@ -257,5 +262,7 @@
 
         -->
     </LinearLayout>
+
+    </ScrollView>
 
 </android.support.v7.widget.LinearLayoutCompat>

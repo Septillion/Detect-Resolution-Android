@@ -1,5 +1,6 @@
 package com.frankseptillion.readresolution;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onResume() {
         super.onResume();
@@ -53,7 +55,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Get HDR Capabilities
-        int[] HDRcapabilities = display.getHdrCapabilities().getSupportedHdrTypes();
+        int[] HDRcapabilities = new int[0];
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            HDRcapabilities = display.getHdrCapabilities().getSupportedHdrTypes();
+        }
         if (HDRcapabilities.length > 0) {
             StringBuilder HDRenum = new StringBuilder();
             int HDR10flag = 0;
@@ -65,8 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     case Display.HdrCapabilities.HDR_TYPE_HDR10:
                         HDR10flag = 1;
                         break;
-                    case 4:
-                        // HDR10+ added in API 29
+                    case Display.HdrCapabilities.HDR_TYPE_HDR10_PLUS:
                         HDR10flag = 2;
                         break;
                     case Display.HdrCapabilities.HDR_TYPE_DOLBY_VISION:
@@ -96,8 +100,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Get Wide Color Gamut
-        if (getResources().getConfiguration().isScreenWideColorGamut()){
-            StringIsWideColor = getString(R.string.supported);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (getResources().getConfiguration().isScreenWideColorGamut()){
+                StringIsWideColor = getString(R.string.supported);
+            }else {
+                StringIsWideColor = getString(R.string.notSupported);
+            }
         }else {
             StringIsWideColor = getString(R.string.notSupported);
         }
