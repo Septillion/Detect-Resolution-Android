@@ -5,9 +5,12 @@
     <string name="demensions_in_dp">界面尺寸（dp）</string>
     <string name="density_in_dpi">缩放倍数</string>
     <string name="written_by_frank_from_frankseptillion_com">王跃琨 frankseptillion.com</string>
-    <string name="supports_hdr">支持 HDR</string>
+    <string name="supports_hdr">HDR 显示</string>
     <string name="model">设备名称</string>
     <string name="FontWeight">Font Weight</string>
     <string name="weight100">续</string>
     <string name="refresh_rate">刷新率</string>
+    <string name="notSupported">不支持</string>
+    <string name="wide_color_gamut">广色域</string>
+    <string name="supported">支持</string>
 </resources>
