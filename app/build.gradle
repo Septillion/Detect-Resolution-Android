@@ -21,6 +21,9 @@ android {
         targetCompatibility = 1.6
     }
     buildToolsVersion = '29.0.2'
+    aaptOptions {
+        cruncherEnabled = false
+    }
 }
 
 dependencies {
