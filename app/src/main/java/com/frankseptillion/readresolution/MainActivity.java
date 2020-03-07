@@ -3,7 +3,7 @@ package com.frankseptillion.readresolution;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Display;
