@@ -2,4 +2,4 @@
 
 Head over to the [release page](https://github.com/Septillion/Detect-Resolution/releases) for download.
 
-![img](Screenshot_Detect Resolution.jpg)
+![img](https://github.com/Septillion/Detect-Resolution/blob/master/Screenshot_Detect%20Resolution.jpg?raw=true)
