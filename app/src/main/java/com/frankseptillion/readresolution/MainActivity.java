@@ -3,17 +3,16 @@ package com.frankseptillion.readresolution;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Rect;
-import android.graphics.Region;
 import android.os.Build;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
-import android.view.View;
 import android.widget.TextView;
 
 import com.microsoft.device.display.DisplayMask;
@@ -26,41 +25,16 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "";
-    private TextView model, resolution, dimensions, density, isHDR, isWideColor, refreshRate;
-    private String modelNumber2, StringIsWideColor;
-
     private boolean isDualScreenDevice() {
         String feature = "com.microsoft.device.display.displaymask";
         PackageManager pm = this.getPackageManager();
-
-        if (pm.hasSystemFeature(feature)) {
-            Log.i(TAG, "System has feature: " + feature);
-            return true;
-        } else {
-            Log.w(TAG, "System missing feature: " + feature);
-            return false;
-        }
+        return pm.hasSystemFeature(feature);
     }
 
     private boolean isAppSpanned() {
         DisplayMask displayMask = DisplayMask.fromResourcesRectApproximation(this);
-        Region region = displayMask.getBounds();
         List<Rect> boundings = displayMask.getBoundingRects();
-        if (!boundings.isEmpty()) {
-            Rect first = boundings.get(0);
-            View rootView = this.getWindow().getDecorView().getRootView();
-            Rect drawingRect = new Rect();
-            rootView.getDrawingRect(drawingRect);
-            if (first.intersect(drawingRect)) {
-                Log.d(TAG, "Dual screen - intersect: " + drawingRect);
-                return true;
-            } else {
-                Log.d(TAG, "Single screen - not intersect: " + drawingRect);
-                return false;
-            }
-        }
-        return false;
+        return !boundings.isEmpty();
     }
 
     @Override
@@ -69,20 +43,30 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @SuppressLint("WrongConstant")
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onResume() {
         super.onResume();
         setContentView(R.layout.activity_main);
+        if (isDualScreenDevice() && isAppSpanned()) {
+            if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                setContentView(R.layout.activity_main_horizontal_dual_screen);
+            }
+            if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                setContentView(R.layout.activity_main_vertical_dual_screen);
+            }
+        }
 
         // Initializing View
-        model = findViewById(R.id.idModel);
-        resolution = findViewById(R.id.idResolution);
-        dimensions = findViewById(R.id.idDemensions);
-        density = findViewById(R.id.idDesity);
-        isHDR = findViewById(R.id.idIsHDR);
-        isWideColor = findViewById(R.id.isWideColor);
-        refreshRate = findViewById(R.id.refreshRate);
+        LinearLayoutCompat bg = findViewById(R.id.background);
+        LinearLayoutCompat horizontalGap = findViewById(R.id.horizontalGap);
+        TextView model = findViewById(R.id.idModel);
+        TextView resolution = findViewById(R.id.idResolution);
+        TextView dimensions = findViewById(R.id.idDemensions);
+        TextView density = findViewById(R.id.idDesity);
+        TextView isHDR = findViewById(R.id.idIsHDR);
+        TextView isWideColor = findViewById(R.id.isWideColor);
+        TextView refreshRate = findViewById(R.id.refreshRate);
 
         // Get Display Information
         Display display = getWindowManager().getDefaultDisplay();
@@ -91,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         StringBuilder isHdr = new StringBuilder("");
 
         // Get Device Name
+        String modelNumber2;
         try {
             if (BluetoothAdapter.getDefaultAdapter().getName() != null) {
                 modelNumber2 = BluetoothAdapter.getDefaultAdapter().getName();
@@ -100,10 +85,13 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             modelNumber2 = Build.MODEL;
         }
-
         if (isDualScreenDevice()) {
             modelNumber2 = "Microsoft Surface Duo";
+            if (isAppSpanned()) {
+                modelNumber2 = "Microsoft Surface Duo Spanned";
+            }
         }
+
 
         // Get All Supported Modes
         String allSupportedResolutions = "";
@@ -111,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         Set<Integer> supportedResolutions = new LinkedHashSet<Integer>();
         Set<Float> supportedRefreshRates = new LinkedHashSet<Float>();
         DecimalFormat df = new DecimalFormat("###.###");
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Display.Mode[] modes = display.getSupportedModes();
             for (Display.Mode mode : modes) {
                 supportedResolutions.add(mode.getPhysicalWidth());
@@ -142,61 +130,60 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Get HDR Capabilities
-        int[] HDRcapabilities = new int[0];
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            HDRcapabilities = display.getHdrCapabilities().getSupportedHdrTypes();
-        }
-        if (HDRcapabilities.length > 0) {
-            StringBuilder HDRenum = new StringBuilder();
-            int HDR10flag = 0;
-            for (int i : HDRcapabilities) {
-                switch (i) {
-                    case Display.HdrCapabilities.HDR_TYPE_HLG:
-                        HDRenum.append("HLG, ");
+            int[] HDRcapabilities = display.getHdrCapabilities().getSupportedHdrTypes();
+            if (HDRcapabilities.length > 0) {
+                StringBuilder HDRenum = new StringBuilder();
+                int HDR10flag = 0;
+                for (int i : HDRcapabilities) {
+                    switch (i) {
+                        case Display.HdrCapabilities.HDR_TYPE_HLG:
+                            HDRenum.append("HLG, ");
+                            break;
+                        case Display.HdrCapabilities.HDR_TYPE_HDR10:
+                            HDR10flag = 1;
+                            break;
+                        case Display.HdrCapabilities.HDR_TYPE_HDR10_PLUS:
+                            HDR10flag = 2;
+                            break;
+                        case Display.HdrCapabilities.HDR_TYPE_DOLBY_VISION:
+                            HDR10flag = 3;
+                            break;
+                        default:
+                            HDRenum = new StringBuilder(getString(R.string.notSupported));
+                    }
+                }
+                // Only show highest HDR standard.
+                switch (HDR10flag) {
+                    case 1:
+                        HDRenum.append("HDR10");
                         break;
-                    case Display.HdrCapabilities.HDR_TYPE_HDR10:
-                        HDR10flag = 1;
+                    case 2:
+                        HDRenum.append("HDR10+");
                         break;
-                    case Display.HdrCapabilities.HDR_TYPE_HDR10_PLUS:
-                        HDR10flag = 2;
-                        break;
-                    case Display.HdrCapabilities.HDR_TYPE_DOLBY_VISION:
-                        HDR10flag = 3;
+                    case 3:
+                        HDRenum.append("Dolby Vision");
                         break;
                     default:
-                        HDRenum = new StringBuilder(getString(R.string.notSupported));
+                        break;
                 }
+                isHdr.append(HDRenum.toString());
+            } else {
+                isHdr.append(getString(R.string.notSupported));
             }
-            // Only show highest HDR standard.
-            switch (HDR10flag) {
-                case 1:
-                    HDRenum.append("HDR10");
-                    break;
-                case 2:
-                    HDRenum.append("HDR10+");
-                    break;
-                case 3:
-                    HDRenum.append("Dolby Vision");
-                    break;
-                default:
-                    break;
-            }
-            isHdr.append(HDRenum.toString());
-        } else {
-            isHdr.append(getString(R.string.notSupported));
         }
 
         // Get Wide Color Gamut
+        String stringIsWideColor;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (getResources().getConfiguration().isScreenWideColorGamut()) {
-                StringIsWideColor = getString(R.string.supported);
+                stringIsWideColor = getString(R.string.supported);
             } else {
-                StringIsWideColor = getString(R.string.notSupported);
+                stringIsWideColor = getString(R.string.notSupported);
             }
         } else {
-            StringIsWideColor = getString(R.string.notSupported);
+            stringIsWideColor = getString(R.string.notSupported);
         }
-
 
         // Set Display Information
         model.setText(modelNumber2);
@@ -204,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
         dimensions.setText((int) Math.ceil(dm.widthPixels / dm.density) + " × " + (int) Math.ceil(dm.heightPixels / dm.density));
         density.setText(dm.density + "x");
         isHDR.setText(isHdr.toString());
-        isWideColor.setText(StringIsWideColor);
+        isWideColor.setText(stringIsWideColor);
         refreshRate.setText((int) display.getRefreshRate() + "Hz" + allSupportedRefreshRates);
 
     }

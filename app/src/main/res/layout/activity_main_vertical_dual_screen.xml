@@ -8,19 +8,19 @@
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
     android:background="@color/colorPrimary"
-    android:orientation="horizontal"
-    tools:context=".MainActivity">
+    android:id="@+id/background"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    tools:ignore="MissingDefaultResource">
 
-    <ScrollView
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:background="#039be5"
+        android:layout_weight="1">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
@@ -130,9 +130,21 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="100dp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/horizontalGap"
+        />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:layout_weight="1">
 
 
         <TextView
@@ -192,8 +204,7 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_marginTop="2dp"
-            android:layout_height="24sp"
+            android:layout_height="20sp"
             android:layout_marginBottom="20dp"
             app:srcCompat="@drawable/notcolormanaged2"
             android:contentDescription="Color Managed" />
@@ -267,8 +278,6 @@
             android:text="@string/written_by_frank_from_frankseptillion_com" />
 
         -->
-    </LinearLayout>
-
-    </ScrollView>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
