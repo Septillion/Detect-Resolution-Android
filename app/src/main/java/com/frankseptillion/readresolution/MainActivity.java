@@ -24,9 +24,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         DisplayCapabilities dc = new DisplayCapabilities(this);
+
         setContentView(R.layout.activity_main);
-        if (dc.isDualScreenDevice() && dc.isAppSpanned()) {
+
+        // Use Dual Screen Layout if is on a Surface Duo.
+        if (dc.isAppSpanned()) {
             if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 setContentView(R.layout.activity_main_horizontal_dual_screen);
             }
