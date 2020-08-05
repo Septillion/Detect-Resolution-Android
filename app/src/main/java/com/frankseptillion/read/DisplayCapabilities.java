@@ -29,10 +29,12 @@ public class DisplayCapabilities {
         mWindowManager.getDefaultDisplay().getRealMetrics(mDisplayMetrics);
     }
 
+    // Surface Duo Specific
     public boolean isDualScreenDevice() {
         return mContext.getPackageManager().hasSystemFeature("com.microsoft.device.display.displaymask");
     }
 
+    // Surface Duo Specific
     public boolean isAppSpanned() {
             return isDualScreenDevice() && !DisplayMask.fromResourcesRectApproximation(mContext).getBoundingRects().isEmpty();
     }
