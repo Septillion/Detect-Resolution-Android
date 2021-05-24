@@ -126,34 +126,29 @@ public class DisplayCapabilities {
                 for (int i : HDRcapabilities) {
                     switch (i) {
                         case Display.HdrCapabilities.HDR_TYPE_HLG:
-                            HDRenum.append("HLG, ");
+                            HDRenum.append(" HLG");
                             break;
                         case Display.HdrCapabilities.HDR_TYPE_HDR10:
-                            HDR10flag = 1;
+                            if (HDR10flag < 1){
+                                HDR10flag = 1;
+                            }
+                            HDRenum.append(" HDR10");
                             break;
                         case Display.HdrCapabilities.HDR_TYPE_HDR10_PLUS:
-                            HDR10flag = 2;
+                            if (HDR10flag < 2){
+                                HDR10flag = 2;
+                            }
+                            HDRenum.append(" HDR10+");
                             break;
                         case Display.HdrCapabilities.HDR_TYPE_DOLBY_VISION:
-                            HDR10flag = 3;
+                            if (HDR10flag < 3){
+                                HDR10flag = 3;
+                            }
+                            HDRenum.append(" DolbyVision");
                             break;
                         default:
                             HDRenum = new StringBuilder(mContext.getString(R.string.notSupported));
                     }
-                }
-                // Only show highest HDR standard.
-                switch (HDR10flag) {
-                    case 1:
-                        HDRenum.append("HDR10");
-                        break;
-                    case 2:
-                        HDRenum.append("HDR10+");
-                        break;
-                    case 3:
-                        HDRenum.append("Dolby Vision");
-                        break;
-                    default:
-                        break;
                 }
                 isHdr.append(HDRenum.toString());
             } else {
