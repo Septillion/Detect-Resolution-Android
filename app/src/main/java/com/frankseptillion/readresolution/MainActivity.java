@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set Display Information
         model.setText(dc.getModelNumber());
-        resolution.setText(dc.getResolutionsInPixels() + dc.getSupportedResolutions());
+        resolution.setText(dc.getResolutionsInPixels() + dc.getAspectRatio() + dc.getSupportedResolutions());
         dimensions.setText(dc.getDimensionsInDp());
         density.setText(dc.getScaleFactor() + "x");
         isHDR.setText(dc.getHdrCapabilities());

@@ -182,6 +182,10 @@ public class DisplayCapabilities {
         return mDisplayMetrics.widthPixels + " × " + mDisplayMetrics.heightPixels;
     }
 
+    public String getAspectRatio() {
+        return " (" + new DecimalFormat("#.#").format((float)mDisplayMetrics.heightPixels / (float)mDisplayMetrics.widthPixels * 9) + ":9)";
+    }
+
     public int getRefreshRate() {
         return (int) mWindowManager.getDefaultDisplay().getRefreshRate();
     }
