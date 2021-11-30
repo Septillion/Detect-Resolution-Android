@@ -12,4 +12,5 @@
     <string name="notSupported">Not Supported</string>
     <string name="wide_color_gamut">Wide Color Gamut</string>
     <string name="supported">Supported</string>
+    <string name="memorystatus">MemoryStatus</string>
 </resources>

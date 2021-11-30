@@ -49,15 +49,17 @@ public class MainActivity extends AppCompatActivity {
         TextView isHDR = findViewById(R.id.idIsHDR);
         TextView isWideColor = findViewById(R.id.isWideColor);
         TextView refreshRate = findViewById(R.id.refreshRate);
+        TextView memoryStatus = findViewById(R.id.memoryStatus);
 
         // Set Display Information
         model.setText(dc.getModelNumber());
-        resolution.setText(dc.getResolutionsInPixels() + dc.getAspectRatio() + dc.getSupportedResolutions());
+        resolution.setText(dc.getResolutionsInPixels() + dc.getSupportedResolutions() + dc.getAspectRatio() + dc.getDPI() );
         dimensions.setText(dc.getDimensionsInDp());
         density.setText(dc.getScaleFactor() + "x");
         isHDR.setText(dc.getHdrCapabilities());
         isWideColor.setText(dc.getWideColorSupport());
         refreshRate.setText(dc.getRefreshRate() + dc.getSupportedRefreshRates());
+        memoryStatus.setText(dc.getMemoryInfo());
 
     }
 }

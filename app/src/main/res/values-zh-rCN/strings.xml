@@ -13,4 +13,5 @@
     <string name="notSupported">不支持</string>
     <string name="wide_color_gamut">广色域</string>
     <string name="supported">支持</string>
+    <string name="memorystatus">内存状态</string>
 </resources>

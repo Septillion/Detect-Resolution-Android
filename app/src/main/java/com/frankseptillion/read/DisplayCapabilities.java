@@ -4,8 +4,10 @@ import com.frankseptillion.readresolution.R;
 import com.microsoft.device.display.DisplayMask;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.graphics.Point;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -51,10 +53,7 @@ public class DisplayCapabilities {
             mModelNumber = Build.MODEL;
         }
         if (isAppSpanned()) {
-            mModelNumber = "Microsoft Surface Duo Spanned";
-        }
-        if (isDualScreenDevice()) {
-            mModelNumber = "Microsoft Surface Duo";
+            mModelNumber += " Spanned";
         }
         return mModelNumber;
     }
@@ -192,6 +191,30 @@ public class DisplayCapabilities {
 
     public float getScaleFactor() {
         return mDisplayMetrics.density;
+    }
+
+    private ActivityManager.MemoryInfo getAvailableMemory(){
+        ActivityManager activityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
+        activityManager.getMemoryInfo(memoryInfo);
+        return memoryInfo;
+    }
+
+    public String getMemoryInfo(){
+        ActivityManager.MemoryInfo memoryInfo = getAvailableMemory();
+        String isLow = "";
+        if (memoryInfo.lowMemory){
+            isLow = " (Low Memory!)";
+        }
+        return new DecimalFormat("#.##").format(Long.valueOf(memoryInfo.availMem).doubleValue()/1024/1024/1024)
+                + "/"
+                + new DecimalFormat("#.##").format(Long.valueOf(memoryInfo.totalMem).doubleValue()/1024/1024/1024)
+                + "GB"
+                + isLow;
+    }
+
+    public String getDPI(){
+        return "("+ (int)mDisplayMetrics.xdpi +"ppi)";
     }
 
 }
